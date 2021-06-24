@@ -1,25 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import MyInput from "./components/input";
+import {IFormValues} from './types'
+ 
 
 function App() {
+  const [FormValue, setFormValue] = React.useState<IFormValues>();
+  useEffect(() => {
+    console.log(FormValue);
+  }, [FormValue]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <MyInput
+        FormValue={FormValue}
+        setFormValue={setFormValue}
+        name={"firstName"}
+        label={"First Name"}
+      />
+      <MyInput
+        FormValue={FormValue}
+        setFormValue={setFormValue}
+        name={"lastName"}
+        label={"Last Name"}
+        helpText={"we never share your name to others"}
+      />
+    </>
   );
 }
 
