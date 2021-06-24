@@ -5,28 +5,53 @@ import MyInput from "./components/input";
 import { IFormValues } from "./types";
 import DataTable from "./components/dataTable";
 
-interface IStorage extends IFormValues {}
+interface IStorage extends IFormValues {
+  id: number;
+}
 
 function App() {
   const [FormValue, setFormValue] = React.useState<IFormValues>();
 
   const [Storage, setStorage] = React.useState<IStorage[]>([]);
+  const [EditMode, setEditMode] = React.useState<Boolean>(false);
+  const [EditID, setEditID] = React.useState<number>(0);
 
   const addData = (fName: string, lName: string, address: string) => {
     setStorage([
       ...Storage,
-      { firstName: fName, lastName: lName, address: address },
+      { firstName: fName, lastName: lName, address: address, id: Date.now() },
     ]);
   };
 
-  const handleClick = () => {
-    addData(FormValue!.firstName, FormValue!.lastName, FormValue!.address);
+  const handleAdd = () => {
+    FormValue &&
+      addData(FormValue!.firstName, FormValue!.lastName, FormValue!.address);
     setFormValue(undefined);
   };
 
   useEffect(() => {
     console.log(Storage);
   }, [Storage]);
+
+  const handleDelete = (id: number) => {
+    setStorage([...Storage.filter((i) => i.id != id)]);
+  };
+
+  const handleInitEdit = (id: number) => {
+    setEditID(id);
+  };
+
+  const handleEdit = () =>{
+    let oldStorage = Storage;
+    oldStorage = oldStorage.filter(i=>i.id!=EditID)
+    let newValues = FormValue as IStorage;
+    newValues.id = Date.now();
+    oldStorage.push(newValues);
+    setStorage(oldStorage)
+    setEditMode(false)
+    setFormValue(undefined);
+
+  }
 
   return (
     <>
@@ -51,32 +76,25 @@ function App() {
         />
 
         <button
-          onClick={handleClick}
+          onClick={()=>{EditMode ? handleEdit() : handleAdd()  } }
           type="button"
-          className="btn btn-success w-100"
+          className={`btn ${EditMode ? "btn-success" : "btn-primary"}  w-100`}
         >
-          Add
+          {EditMode ? "Save" : "Add"}
         </button>
       </div>
 
       <div className={"w-75 m-auto"}>
-        <DataTable data={Storage} />
+        <DataTable
+          EditMode={EditMode}
+          setEditMode={setEditMode}
+          handleDelete={handleDelete}
+          handleInitEdit={handleInitEdit}
+          data={Storage}
+        />
       </div>
     </>
   );
 }
 
 export default App;
-
-const optData = [
-  {
-    firstName: "mohammad",
-    lastName: "foroughi",
-    address: "tehran",
-  },
-  {
-    firstName: "Harmik",
-    lastName: "Boazar",
-    address: "karaj",
-  },
-];

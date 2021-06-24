@@ -5,10 +5,19 @@ interface IDataTable {
     firstName: string;
     lastName: string;
     address: string;
+    id: number;
   }[];
+  handleDelete: (id: number) => void;
+  setEditMode: (mode: Boolean) => void;
+  EditMode: Boolean;
+  handleInitEdit: (id: number) => void;
 }
 
 const DataTable: React.FC<IDataTable> = (props) => {
+  const handleClick = (id: number) => {
+    props.setEditMode(true);
+    props.handleInitEdit(id)
+  };
   return (
     <>
       <table className="table">
@@ -24,11 +33,36 @@ const DataTable: React.FC<IDataTable> = (props) => {
         <tbody>
           {props.data.map((item, index) => {
             return (
-              <tr>
-                <th scope="row">{index+1}</th>
+              <tr key={index}>
+                <th scope="row">{index + 1}</th>
                 <td>{item.firstName}</td>
                 <td>{item.lastName}</td>
                 <td>{item.address}</td>
+
+                <td>
+                  {props.EditMode ? (
+                    ""
+                  ) : (
+                    <>
+                      <button
+                        onClick={()=>{handleClick(item.id)}}
+                        type="button"
+                        className="btn btn-info mx-1"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => {
+                          props.handleDelete(item.id);
+                        }}
+                        type="button"
+                        className="btn btn-danger mx-1"
+                      >
+                        Delete
+                      </button>
+                    </>
+                  )}
+                </td>
               </tr>
             );
           })}
