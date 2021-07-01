@@ -19,6 +19,7 @@ const UsersDetail: React.FC = () => {
 
   useEffect(() => {
     setUserID(params.id);
+    !params.id && History.push("/users");
   }, []);
 
   useEffect(() => {
