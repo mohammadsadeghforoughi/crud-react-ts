@@ -1,7 +1,13 @@
 import React, { useEffect } from "react";
 import UserList from "../DataFactory";
-import {Link} from 'react-router-dom'
+import {useHistory} from 'react-router-dom'
+
+
 const UsersPage: React.FC = () => {
+  const History = useHistory()
+  const handleClick = (id: string)=>{
+     History.push('/users/'+id)
+  }
   return (
     <>
       <div
@@ -28,14 +34,14 @@ const UsersPage: React.FC = () => {
         >
           {UserList.map((i, index) => {
             return (
-              <Link to={'/users/'+i.id}
+              <span onClick={()=>{handleClick(i.id)}}
                 style={{ width: "100%", cursor: "pointer", display: "block" }}
               >
                 {`${i.name}  ${i.family}`}
                 {index + 1 != UserList.length && (
                   <hr style={{ borderColor: "#fff" }} />
                 )}
-              </Link >
+              </span >
             );
           })}
         </div>

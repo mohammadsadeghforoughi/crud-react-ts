@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import UserList from "../DataFactory";
-import { useParams, Link } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 const UsersDetail: React.FC = () => {
   const params = useParams<{ id: string }>();
+  const History = useHistory();
   const [UserID, setUserID] = useState<string>("");
   const [UserDetail, setUserDetail] =
     useState<{
@@ -11,6 +12,10 @@ const UsersDetail: React.FC = () => {
       age: number;
       id: string;
     }>();
+
+  const GoToUsersPage = () => {
+    History.push("/users");
+  };
 
   useEffect(() => {
     setUserID(params.id);
@@ -65,7 +70,7 @@ const UsersDetail: React.FC = () => {
             <span>{UserDetail?.age}</span>
           </div>
         </div>
-        <Link to={"/users"}>Back to Users List Page</Link>
+        <button onClick={GoToUsersPage}> {`<= Back to Users List Page`}</button>
       </div>
     </>
   );

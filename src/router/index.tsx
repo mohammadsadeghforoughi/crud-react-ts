@@ -9,6 +9,7 @@ import UserDetailRoute from "../pages/UserDetail";
 export const routes = (
   <>
     <Switch>
+      <Route path="/crud" component={CrudRoute}></Route>
       <Route path="/users/:id" component={UserDetailRoute}></Route>
       <Route path="/users" component={UsersRoute}></Route>
       <Route path="/maktab" component={MaktabRoute}></Route>
