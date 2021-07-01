@@ -16,7 +16,7 @@ interface IDataTable {
 const DataTable: React.FC<IDataTable> = (props) => {
   const handleClick = (id: number) => {
     props.setEditMode(true);
-    props.handleInitEdit(id)
+    props.handleInitEdit(id);
   };
   return (
     <>
@@ -45,7 +45,9 @@ const DataTable: React.FC<IDataTable> = (props) => {
                   ) : (
                     <>
                       <button
-                        onClick={()=>{handleClick(item.id)}}
+                        onClick={() => {
+                          handleClick(item.id);
+                        }}
                         type="button"
                         className="btn btn-info mx-1"
                       >
@@ -73,3 +75,4 @@ const DataTable: React.FC<IDataTable> = (props) => {
 };
 
 export default DataTable;
+
