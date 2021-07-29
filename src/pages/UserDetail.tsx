@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import UserList from "../DataFactory";
 import { useParams, useHistory } from "react-router-dom";
+import { Button } from "react-bootstrap";
 const UsersDetail: React.FC = () => {
   const params = useParams<{ id: string }>();
   const History = useHistory();
@@ -71,7 +72,9 @@ const UsersDetail: React.FC = () => {
             <span>{UserDetail?.age}</span>
           </div>
         </div>
-        <button onClick={GoToUsersPage}> {`<= Back to Users List Page`}</button>
+        <Button onClick={GoToUsersPage} variant="secondary">
+          Back to Users List Page
+        </Button>
       </div>
     </>
   );
